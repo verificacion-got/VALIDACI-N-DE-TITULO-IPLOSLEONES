@@ -2,10 +2,10 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=700">
     <title>Validación de Certificados</title>
     <style>
-        /* Fondo oscuro de la pantalla idéntico a la foto */
+        /* Fondo oscuro principal (el fondo de la página completa) */
         body {
             background-color: #3b3b3b;
             font-family: Arial, Helvetica, sans-serif;
@@ -14,6 +14,30 @@
             align-items: center;
             height: 100vh;
             margin: 0;
+            -webkit-text-size-adjust: none; 
+        }
+
+        /* NUEVO: El recuadro gris oscuro que está detrás de todo simulando la ventana */
+        .outer-frame {
+            width: 680px; /* Más ancho que la tarjeta principal para que asome por los lados */
+            padding-top: 60px;
+            padding-bottom: 60px;
+            background-color: #2b2b2b; /* Gris un poco más oscuro que el fondo principal */
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 0 15px rgba(0,0,0,0.5); /* Sombra sutil del marco exterior */
+        }
+
+        /* NUEVO: La franja clara que cruza por detrás de la tarjeta */
+        .stripe {
+            position: absolute;
+            width: 100%;
+            top: 108px; /* Empieza exactamente debajo de la barra roja */
+            bottom: 60px; /* Termina exactamente al ras de la parte inferior blanca */
+            background-color: #e5e5e5;
+            z-index: 0;
         }
 
         /* La caja principal con las proporciones exactas y sombra dura */
@@ -22,7 +46,7 @@
             width: 560px; /* Ancho ajustado para coincidir con la proporción */
             box-shadow: 0px 5px 25px rgba(0, 0, 0, 0.85);
             position: relative;
-            margin: auto;
+            z-index: 1; /* Para que quede flotando SOBRE la franja clara */
         }
 
         /* La barra roja superior idéntica */
@@ -32,7 +56,7 @@
             width: 100%;
         }
 
-        /* Contenedor interno con los márgenes (padding) idénticos a la foto */
+        /* Contenedor interno con los márgenes idénticos a la foto */
         .modal-content {
             padding: 25px 30px 35px 30px;
             display: flex;
@@ -131,40 +155,44 @@
 </head>
 <body>
 
-    <div class="modal-box">
-        <div class="modal-header"></div>
+    <div class="outer-frame">
+        <div class="stripe"></div>
         
-        <div class="modal-content" id="formulario">
-            <div class="left-panel">
-                <h2>Validación de Certificados</h2>
-                <p>Aquí podrá validar los Certificados emitidos por INSTITUTO<br>PROFESIONAL LOS LEONES</p>
-                <p>Para realizarlo debe ingresar el Código de Verificación y luego hacer<br>click en Validar.</p>
-                <p class="ingrese-codigo">Ingrese Código de certificado para validar.</p>
-                
-                <input type="text" id="codigoInput" value="">
-                <button onclick="validar()">Validar</button>
-                <p id="errorMsg" style="color: red; display: none; margin-top: 10px; font-weight: bold;">Código no válido</p>
-            </div>
-            <div class="right-panel">
-                <img src="leones.png" alt="Instituto Profesional Los Leones" class="logo-img">
-            </div>
-        </div>
-
-        <div class="modal-content" id="resultado">
-            <div class="left-panel">
-                <h2>Validación de Certificados</h2>
-                <div class="datos-resultado">
-                    <p><span>Nombre:</span> Miguel Fernando Cespedes Herrera</p>
-                    <p><span>RUT:</span> 14141740-1</p>
-                    <p><span>Egreso:</span> 30 de enero del 2015</p>
-                    <p><span>Nota:</span> 6,2</p>
-                    <p><span>Sede:</span> República</p>
-                    <p><span>Modalidad:</span> Diurno</p>
+        <div class="modal-box">
+            <div class="modal-header"></div>
+            
+            <div class="modal-content" id="formulario">
+                <div class="left-panel">
+                    <h2>Validación de Certificados</h2>
+                    <p>Aquí podrá validar los Certificados emitidos por INSTITUTO<br>PROFESIONAL LOS LEONES</p>
+                    <p>Para realizarlo debe ingresar el Código de Verificación y luego hacer<br>click en Validar.</p>
+                    <p class="ingrese-codigo">Ingrese Código de certificado para validar.</p>
+                    
+                    <input type="text" id="codigoInput" value="676582826583328581">
+                    <button onclick="validar()">Validar</button>
+                    <p id="errorMsg" style="color: red; display: none; margin-top: 10px; font-weight: bold;">Código no válido</p>
                 </div>
-                <button onclick="volver()" style="margin-top: 15px;">Volver</button>
+                <div class="right-panel">
+                    <img src="leones.png" alt="Instituto Profesional Los Leones" class="logo-img">
+                </div>
             </div>
-            <div class="right-panel">
-                <img src="leones.png" alt="Instituto Profesional Los Leones" class="logo-img">
+
+            <div class="modal-content" id="resultado">
+                <div class="left-panel">
+                    <h2>Validación de Certificados</h2>
+                    <div class="datos-resultado">
+                        <p><span>Nombre:</span> Miguel Fernando Cespedes Herrera</p>
+                        <p><span>RUT:</span> 14141740-1</p>
+                        <p><span>Egreso:</span> 30 de enero del 2015</p>
+                        <p><span>Nota:</span> 6,2</p>
+                        <p><span>Sede:</span> República</p>
+                        <p><span>Modalidad:</span> Diurno</p>
+                    </div>
+                    <button onclick="volver()" style="margin-top: 15px;">Volver</button>
+                </div>
+                <div class="right-panel">
+                    <img src="leones.png" alt="Instituto Profesional Los Leones" class="logo-img">
+                </div>
             </div>
         </div>
     </div>
