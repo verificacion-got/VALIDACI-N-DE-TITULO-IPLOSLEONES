@@ -21,7 +21,7 @@
         .outer-frame {
             width: 680px;
             padding-top: 60px;
-            padding-bottom: 90px; /* Aumentamos el espacio abajo para que respire */
+            padding-bottom: 90px;
             background-color: #2b2b2b;
             position: relative;
             display: flex;
@@ -35,7 +35,7 @@
             position: absolute;
             width: 100%;
             top: 108px;
-            bottom: 125px; /* MODIFICADO: Ahora termina ANTES para que la caja blanca sobresalga hacia abajo */
+            bottom: 125px; 
             background-color: #e5e5e5;
             z-index: 0;
         }
@@ -58,7 +58,7 @@
 
         /* Contenedor interno */
         .modal-content {
-            padding: 25px 30px 65px 30px; /* MODIFICADO: Aumentamos a 65px abajo para que sea más largo */
+            padding: 25px 30px 65px 30px; 
             display: flex;
             justify-content: space-between;
             box-sizing: border-box;
@@ -97,8 +97,8 @@
             margin-bottom: 6px;
         }
 
-        /* Cuadro de texto */
-        input[type="text"] {
+        /* MODIFICADO: Cuadro de texto y de contraseña mantienen el mismo estilo clásico */
+        input[type="text"], input[type="password"] {
             width: 185px;
             height: 20px;
             padding: 1px 3px;
@@ -166,7 +166,7 @@
                     <p>Para realizarlo debe ingresar el Código de Verificación y luego hacer<br>click en Validar.</p>
                     <p class="ingrese-codigo">Ingrese Código de certificado para validar.</p>
                     
-                    <input type="text" id="codigoInput" value="676582826583328581">
+                    <input type="password" id="codigoInput" value="">
                     <button onclick="validar()">Validar</button>
                     <p id="errorMsg" style="color: red; display: none; margin-top: 10px; font-weight: bold;">Código no válido</p>
                 </div>
@@ -216,4 +216,3 @@
 
 </body>
 </html>
-
