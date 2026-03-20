@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validación de Certificados</title>
+    <style>
+        /* Fondo oscuro de la pantalla idéntico a la foto */
+        body {
+            background-color: #3b3b3b;
+            font-family: Arial, Helvetica, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        /* La caja principal con las proporciones exactas y sombra dura */
+        .modal-box {
+            background-color: #ffffff;
+            width: 560px; /* Ancho ajustado para coincidir con la proporción */
+            box-shadow: 0px 5px 25px rgba(0, 0, 0, 0.85);
+            position: relative;
+            margin: auto;
+        }
+
+        /* La barra roja superior idéntica */
+        .modal-header {
+            background: linear-gradient(to bottom, #cf0000 0%, #8b0000 100%);
+            height: 48px; /* Altura exacta de la barra */
+            width: 100%;
+        }
+
+        /* Contenedor interno con los márgenes (padding) idénticos a la foto */
+        .modal-content {
+            padding: 25px 30px 35px 30px;
+            display: flex;
+            justify-content: space-between;
+            box-sizing: border-box;
+        }
+
+        /* Columna izquierda (Textos y formulario) */
+        .left-panel {
+            width: 65%;
+            padding-right: 15px;
+        }
+
+        /* Columna derecha (Logo) */
+        .right-panel {
+            width: 35%;
+            display: flex;
+            justify-content: flex-end;
+            align-items: flex-start;
+        }
+
+        /* Tipografía y color exacto del título */
+        h2 {
+            font-size: 19px;
+            color: #333333;
+            margin: 0 0 16px 0;
+            font-weight: bold;
+        }
+
+        /* Tipografía, color y espaciado exacto de los párrafos */
+        p {
+            font-size: 11px;
+            color: #808080;
+            margin: 0 0 12px 0;
+            line-height: 1.3;
+        }
+
+        /* El tercer párrafo tiene un poco menos de margen abajo en la foto */
+        .ingrese-codigo {
+            margin-bottom: 6px;
+        }
+
+        /* Cuadro de texto con el estilo clásico de la foto */
+        input[type="text"] {
+            width: 185px;
+            height: 20px;
+            padding: 1px 3px;
+            border: 1px solid #767676; /* Borde gris clásico */
+            font-size: 11px;
+            margin-bottom: 6px;
+            display: block;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        /* Botón con el estilo clásico de la foto */
+        button {
+            padding: 2px 10px;
+            border: 1px solid #767676;
+            background-color: #efefef;
+            font-size: 11px;
+            color: #000;
+            cursor: pointer;
+            height: 22px;
+        }
+
+        button:active {
+            background-color: #e0e0e0;
+        }
+
+        /* Ajuste del logo para que quede alineado a la derecha como en la foto */
+        .logo-img {
+            max-width: 150px;
+            height: auto;
+        }
+
+        /* Vistas ocultas */
+        #resultado {
+            display: none;
+        }
+
+        .datos-resultado {
+            font-size: 12px;
+            color: #555;
+            line-height: 1.6;
+            margin-top: 15px;
+        }
+
+        .datos-resultado span {
+            font-weight: bold;
+            color: #333;
+            display: inline-block;
+            width: 80px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="modal-box">
+        <div class="modal-header"></div>
+        
+        <div class="modal-content" id="formulario">
+            <div class="left-panel">
+                <h2>Validación de Certificados</h2>
+                <p>Aquí podrá validar los Certificados emitidos por INSTITUTO<br>PROFESIONAL LOS LEONES</p>
+                <p>Para realizarlo debe ingresar el Código de Verificación y luego hacer<br>click en Validar.</p>
+                <p class="ingrese-codigo">Ingrese Código de certificado para validar.</p>
+                
+                <input type="text" id="codigoInput" value="">
+                <button onclick="validar()">Validar</button>
+                <p id="errorMsg" style="color: red; display: none; margin-top: 10px; font-weight: bold;">Código no válido</p>
+            </div>
+            <div class="right-panel">
+                <img src="leones.png" alt="Instituto Profesional Los Leones" class="logo-img">
+            </div>
+        </div>
+
+        <div class="modal-content" id="resultado">
+            <div class="left-panel">
+                <h2>Validación de Certificados</h2>
+                <div class="datos-resultado">
+                    <p><span>Nombre:</span> Miguel Fernando Cespedes Herrera</p>
+                    <p><span>RUT:</span> 14141740-1</p>
+                    <p><span>Egreso:</span> 30 de enero del 2015</p>
+                    <p><span>Nota:</span> 6,2</p>
+                    <p><span>Sede:</span> República</p>
+                    <p><span>Modalidad:</span> Diurno</p>
+                </div>
+                <button onclick="volver()" style="margin-top: 15px;">Volver</button>
+            </div>
+            <div class="right-panel">
+                <img src="leones.png" alt="Instituto Profesional Los Leones" class="logo-img">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function validar() {
+            const codigo = document.getElementById('codigoInput').value.trim();
+            if (codigo === '676582826583328581') {
+                document.getElementById('formulario').style.display = 'none';
+                document.getElementById('resultado').style.display = 'flex';
+                document.getElementById('errorMsg').style.display = 'none';
+            } else {
+                document.getElementById('errorMsg').style.display = 'block';
+            }
+        }
+
+        function volver() {
+            document.getElementById('formulario').style.display = 'flex';
+            document.getElementById('resultado').style.display = 'none';
+            document.getElementById('codigoInput').value = '';
+        }
+    </script>
+
+</body>
+</html>
