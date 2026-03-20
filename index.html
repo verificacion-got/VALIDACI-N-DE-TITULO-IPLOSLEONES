@@ -2,119 +2,218 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=700">
     <title>Validación de Certificados</title>
     <style>
+        /* Fondo oscuro principal */
         body {
-            font-family: sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
-        .header {
-            background-color: #cc0000;
-            color: white;
-            padding: 20px;
-            text-align: left;
-        }
-        .container {
-            padding: 20px;
-        }
-        .certificate-panel {
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-        .title {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
-        .info-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        .info-item {
-            margin-bottom: 15px;
+            background-color: #3b3b3b;
+            font-family: Arial, Helvetica, sans-serif;
             display: flex;
-            align-items: flex-start; /* Alinea los elementos al inicio */
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            -webkit-text-size-adjust: none; 
         }
-        .info-label {
+
+        /* El recuadro gris oscuro exterior */
+        .outer-frame {
+            width: 680px;
+            padding-top: 60px;
+            padding-bottom: 90px;
+            background-color: #2b2b2b;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 0 15px rgba(0,0,0,0.5);
+        }
+
+        /* La franja clara que cruza por detrás */
+        .stripe {
+            position: absolute;
+            width: 100%;
+            top: 108px;
+            bottom: 125px; 
+            background-color: #e5e5e5;
+            z-index: 0;
+        }
+
+        /* La caja principal blanca */
+        .modal-box {
+            background-color: #ffffff;
+            width: 560px; 
+            box-shadow: 0px 5px 25px rgba(0, 0, 0, 0.85);
+            position: relative;
+            z-index: 1; 
+        }
+
+        /* La barra roja superior */
+        .modal-header {
+            background: linear-gradient(to bottom, #cf0000 0%, #8b0000 100%);
+            height: 48px; 
+            width: 100%;
+        }
+
+        /* Contenedor interno */
+        .modal-content {
+            padding: 25px 30px 65px 30px; 
+            display: flex;
+            justify-content: space-between;
+            box-sizing: border-box;
+        }
+
+        /* Columna izquierda (Textos y formulario) */
+        .left-panel {
+            width: 65%;
+            padding-right: 15px;
+        }
+
+        /* Columna derecha (Logo) */
+        .right-panel {
+            width: 35%;
+            display: flex;
+            justify-content: flex-end;
+            align-items: flex-start;
+        }
+
+        /* Tipografías */
+        h2 {
+            font-size: 19px;
+            color: #333333;
+            margin: 0 0 16px 0;
             font-weight: bold;
-            width: 120px;
-            margin-right: 15px;
-            flex-shrink: 0; /* Evita que la etiqueta se encoja */
         }
-        .info-value {
-            color: #555;
-            flex: 1; /* Ocupa el espacio restante manteniendo la columna */
+
+        p {
+            font-size: 11px;
+            color: #808080;
+            margin: 0 0 12px 0;
+            line-height: 1.3;
         }
-        .logo-container {
-            text-align: right;
-            margin-top: -60px; /* Ajusta la posición del logo */
+
+        .ingrese-codigo {
+            margin-bottom: 6px;
         }
-        .logo {
-            max-width: 150px;
+
+        /* Cuadro de texto y de contraseña */
+        input[type="text"], input[type="password"] {
+            width: 185px;
+            height: 20px;
+            padding: 1px 3px;
+            border: 1px solid #767676; 
+            font-size: 11px;
+            margin-bottom: 6px;
+            display: block;
+            box-sizing: border-box;
+            outline: none;
         }
-        .btn-volver {
-            background-color: #eee;
-            border: 1px solid #ccc;
-            padding: 10px 20px;
-            border-radius: 4px;
+
+        /* Botón */
+        button {
+            padding: 2px 10px;
+            border: 1px solid #767676;
+            background-color: #efefef;
+            font-size: 11px;
+            color: #000;
             cursor: pointer;
-            text-decoration: none;
-            color: black;
+            height: 22px;
+        }
+
+        button:active {
+            background-color: #e0e0e0;
+        }
+
+        /* Logo */
+        .logo-img {
+            max-width: 150px;
+            height: auto;
+        }
+
+        /* Vistas ocultas */
+        #resultado {
+            display: none;
+        }
+
+        .datos-resultado {
+            font-size: 12px;
+            color: #555;
+            line-height: 1.6;
+            margin-top: 15px;
+        }
+
+        .datos-resultado span {
+            font-weight: bold;
+            color: #333;
             display: inline-block;
-            margin-top: 10px;
+            width: 80px;
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1>web1.ipleones.cl/Ce...</h1>
-    </div>
-    <div class="container">
-        <div class="certificate-panel">
-            <div class="logo-container">
-                <img src="logo_los_leones.png" alt="Instituto Profesional Los Leones" class="logo">
+
+    <div class="outer-frame">
+        <div class="stripe"></div>
+        
+        <div class="modal-box">
+            <div class="modal-header"></div>
+            
+            <div class="modal-content" id="formulario">
+                <div class="left-panel">
+                    <h2>Validación de Certificados</h2>
+                    <p>Aquí podrá validar los Certificados emitidos por INSTITUTO<br>PROFESIONAL LOS LEONES</p>
+                    <p>Para realizarlo debe ingresar el Código de Verificación y luego hacer<br>click en Validar.</p>
+                    <p class="ingrese-codigo">Ingrese Código de certificado para validar.</p>
+                    
+                    <input type="password" id="codigoInput" value="">
+                    <button onclick="validar()">Validar</button>
+                    <p id="errorMsg" style="color: red; display: none; margin-top: 10px; font-weight: bold;">Código no válido</p>
+                </div>
+                <div class="right-panel">
+                    <img src="leones.png" alt="Instituto Profesional Los Leones" class="logo-img">
+                </div>
             </div>
-            <div class="title">Validación de Certificados</div>
-            <ul class="info-list">
-                <li class="info-item">
-                    <div class="info-label">Nombre:</div>
-                    <div class="info-value">Miguel Fernando Cespedes Herrera</div>
-                </li>
-                <li class="info-item">
-                    <div class="info-label">RUT:</div>
-                    <div class="info-value">14141740-1</div>
-                </li>
-                <li class="info-item">
-                    <div class="info-label">Carrera:</div>
-                    <div class="info-value">Ingeniería en Administración de negocios y<br>ventas</div>
-                </li>
-                <li class="info-item">
-                    <div class="info-label">Egreso:</div>
-                    <div class="info-value">30 de enero del 2015</div>
-                </li>
-                <li class="info-item">
-                    <div class="info-label">Nota:</div>
-                    <div class="info-value">5,9</div>
-                </li>
-                <li class="info-item">
-                    <div class="info-label">Sede:</div>
-                    <div class="info-value">Providencia</div>
-                </li>
-                <li class="info-item">
-                    <div class="info-label">Modalidad:</div>
-                    <div class="info-value">vespertino</div>
-                </li>
-            </ul>
-            <div class="btn-container">
-                <a href="#" class="btn-volver">Volver</a>
+
+            <div class="modal-content" id="resultado">
+                <div class="left-panel">
+                    <h2>Validación de Certificados</h2>
+                    <div class="datos-resultado">
+                        <p><span>Nombre:</span> Miguel Fernando Cespedes Herrera</p>
+                        <p><span>RUT:</span> 14141740-1</p>
+                        <p><span>Carrera:</span> Ingeniería en Administración de negocios y<br><span style="visibility: hidden;"></span>ventas</p>
+                        <p><span>Egreso:</span> 30 de enero del 2015</p>
+                        <p><span>Nota:</span> 5,9</p>
+                        <p><span>Sede:</span> Providencia</p>
+                        <p><span>Modalidad:</span> vespertino</p>
+                    </div>
+                    <button onclick="volver()" style="margin-top: 15px;">Volver</button>
+                </div>
+                <div class="right-panel">
+                    <img src="leones.png" alt="Instituto Profesional Los Leones" class="logo-img">
+                </div>
             </div>
         </div>
     </div>
+
+    <script>
+        function validar() {
+            const codigo = document.getElementById('codigoInput').value.trim();
+            if (codigo === '676582826583328581') {
+                document.getElementById('formulario').style.display = 'none';
+                document.getElementById('resultado').style.display = 'flex';
+                document.getElementById('errorMsg').style.display = 'none';
+            } else {
+                document.getElementById('errorMsg').style.display = 'block';
+            }
+        }
+
+        function volver() {
+            document.getElementById('formulario').style.display = 'flex';
+            document.getElementById('resultado').style.display = 'none';
+            document.getElementById('codigoInput').value = '';
+        }
+    </script>
+
 </body>
 </html>
